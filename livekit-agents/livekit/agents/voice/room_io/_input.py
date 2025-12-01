@@ -142,6 +142,7 @@ class _ParticipantInputStream(Generic[T], ABC):
         logger.debug("start reading stream", extra=extra)
         logger.warning(f"[_forward_task] TRY TO START _forward_task")
         async for event in stream:
+            logger.warning(f"[_forward_task] event.frame: sample_rate={event.frame.sample_rate}, num_channels={event.frame.num_channels}, samples_per_channel={event.frame.samples_per_channel}")
             if not self._attached:
                 # drop frames if the stream is detached
                 continue
