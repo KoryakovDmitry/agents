@@ -251,6 +251,7 @@ class AgentSession(rtc.EventEmitter[EventTypes], Generic[Userdata_T]):
             loop (asyncio.AbstractEventLoop, optional): Event loop to bind the
                 session to. Falls back to :pyfunc:`asyncio.get_event_loop()`.
         """
+        logger.warning(f"AGENT SESSION INIT")
         super().__init__()
         self._loop = loop or asyncio.get_event_loop()
 
