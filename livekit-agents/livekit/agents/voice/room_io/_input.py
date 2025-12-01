@@ -302,6 +302,7 @@ class _ParticipantAudioInputStream(_ParticipantInputStream[rtc.AudioFrame], Audi
     def _resample_frames(self, frames: Iterable[rtc.AudioFrame]) -> Iterable[rtc.AudioFrame]:
         resampler: rtc.AudioResampler | None = None
         for frame in frames:
+            print(f"[_resample_frames] sample rate source frame: {frame.sample_rate} sample rate target frame: {self._sample_rate} ")
             if (
                 not resampler
                 and self._sample_rate is not None
