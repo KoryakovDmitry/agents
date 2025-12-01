@@ -265,7 +265,9 @@ class _ParticipantAudioInputStream(_ParticipantInputStream[rtc.AudioFrame], Audi
             try:
                 duration: float = 0
                 frames = await self._pre_connect_audio_handler.wait_for_data(publication.track.sid)
-                for frame in self._resample_frames(frames):
+                logger.warning(f"[_resample_frames] TRY TO START _resample_frames")
+                for n_frame, frame in enumerate(self._resample_frames(frames)):
+                    logger.warning(f"[_resample_frames] n_frame={n_frame}")
                     if self._attached:
                         await self._data_ch.send(frame)
                         duration += frame.duration
@@ -274,6 +276,7 @@ class _ParticipantAudioInputStream(_ParticipantInputStream[rtc.AudioFrame], Audi
                         "pre-connect audio buffer pushed",
                         extra={"duration": duration, **logging_extra},
                     )
+                logger.warning(f"[_resample_frames] FINISH _resample_frames")
 
             except asyncio.TimeoutError:
                 logger.warning(
