@@ -140,6 +140,7 @@ class _ParticipantInputStream(Generic[T], ABC):
             "source": rtc.TrackSource.Name(publication.source),
         }
         logger.debug("start reading stream", extra=extra)
+        logger.warning(f"[_forward_task] TRY TO START _forward_task")
         async for event in stream:
             if not self._attached:
                 # drop frames if the stream is detached
@@ -252,6 +253,8 @@ class _ParticipantAudioInputStream(_ParticipantInputStream[rtc.AudioFrame], Audi
     ) -> None:
         if old_task:
             await aio.cancel_and_wait(old_task)
+
+        logger.warning(f"[_forward_task] pre_connect_audio_handler={self._pre_connect_audio_handler}, track={publication.track}, audio_features={publication.audio_features}, TF_PRECONNECT_BUFFER={AudioTrackFeature.TF_PRECONNECT_BUFFER}")
 
         if (
             self._pre_connect_audio_handler
